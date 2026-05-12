@@ -1,0 +1,3015 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Charaf Eddine Naai — Portfolio</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Barlow:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+      :root {
+        --bg: #08060e;
+        --surface: #0f0d18;
+        --surface2: #181524;
+        --accent: #e8833a;
+        --accent2: #c8a96e;
+        --ice: #3dd6f5;
+        --text: #f0ece6;
+        --muted: #7a7285;
+        --border: rgba(232, 131, 58, 0.15);
+        --font-display: "Cormorant Garamond", Georgia, serif;
+        --font-body: "Barlow", sans-serif;
+        --font-mono: "Fira Code", monospace;
+      }
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        font-weight: 300;
+        overflow-x: hidden;
+        cursor: none;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.04"/%3E%3C/svg%3E');
+        pointer-events: none;
+      }
+
+      #scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent), var(--accent2));
+        z-index: 10000;
+        transition: width 0.1s ease-out;
+        box-shadow: 0 0 10px var(--accent);
+      }
+
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--accent);
+        border-radius: 2px;
+      }
+
+      .cursor {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--accent);
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9999;
+        transition:
+          transform 0.15s ease,
+          background 0.3s;
+        mix-blend-mode: screen;
+      }
+
+      .cursor-ring {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid rgba(232, 131, 58, 0.6);
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9998;
+        transition:
+          opacity 0.3s,
+          transform 0.2s ease-out,
+          border-color 0.3s;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 1.8rem 5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+
+      nav.scrolled {
+        background: rgba(8, 6, 14, 0.85);
+        backdrop-filter: blur(12px);
+        padding: 1.1rem 5rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-logo {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text);
+        text-decoration: none;
+        letter-spacing: 0.02em;
+        transition: transform 0.3s ease;
+        display: inline-block;
+      }
+      .nav-logo:hover {
+        transform: scale(1.05);
+      }
+      .nav-logo em {
+        color: var(--accent);
+        font-style: normal;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2.8rem;
+        list-style: none;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        transition: color 0.3s;
+        position: relative;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--accent);
+        transition: width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .lang-switch {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        border: 1px solid var(--border);
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+        transition: border-color 0.3s;
+      }
+      .lang-switch:hover {
+        border-color: var(--accent);
+      }
+
+      .lang-btn {
+        color: var(--muted);
+        cursor: pointer;
+        transition:
+          color 0.3s,
+          transform 0.2s;
+        background: none;
+        border: none;
+        font-family: inherit;
+        font-size: inherit;
+      }
+
+      .lang-btn:hover {
+        color: var(--text);
+        transform: translateY(-2px);
+      }
+      .lang-btn.active {
+        color: var(--accent);
+        font-weight: bold;
+      }
+      .lang-sep {
+        color: var(--muted);
+        opacity: 0.5;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: none;
+      }
+      .hamburger span {
+        display: block;
+        width: 24px;
+        height: 1px;
+        background: var(--text);
+        transition: all 0.35s;
+      }
+      .hamburger.open span:nth-child(1) {
+        transform: translateY(6px) rotate(45deg);
+      }
+      .hamburger.open span:nth-child(2) {
+        opacity: 0;
+      }
+      .hamburger.open span:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg);
+      }
+
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(8, 6, 14, 0.98);
+        backdrop-filter: blur(10px);
+        z-index: 99;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2.5rem;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+      .mobile-menu.open {
+        display: flex;
+        opacity: 1;
+      }
+
+      .mobile-menu a {
+        font-family: var(--font-display);
+        font-size: 2.5rem;
+        color: var(--text);
+        text-decoration: none;
+        transition:
+          color 0.3s,
+          transform 0.3s;
+      }
+      .mobile-menu a:hover {
+        color: var(--accent);
+        transform: translateX(10px);
+      }
+
+      #hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        padding: 0 5rem;
+      }
+
+      .hero-bg-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(232, 131, 58, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(232, 131, 58, 0.04) 1px, transparent 1px);
+        background-size: 64px 64px;
+        mask-image: radial-gradient(
+          ellipse 70% 80% at 40% 50%,
+          black 30%,
+          transparent 80%
+        );
+        animation: panGrid 40s linear infinite;
+      }
+
+      @keyframes panGrid {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 64px 64px;
+        }
+      }
+
+      .orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+        pointer-events: none;
+        mix-blend-mode: screen;
+      }
+
+      .orb-1 {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(
+          circle,
+          rgba(232, 131, 58, 0.25),
+          transparent 65%
+        );
+        top: -8%;
+        right: 10%;
+        animation: float1 9s ease-in-out infinite;
+      }
+      .orb-2 {
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(
+          circle,
+          rgba(61, 214, 245, 0.15),
+          transparent 65%
+        );
+        bottom: 5%;
+        left: 15%;
+        animation: float2 12s ease-in-out infinite;
+      }
+      .orb-3 {
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(
+          circle,
+          rgba(200, 169, 110, 0.2),
+          transparent 70%
+        );
+        top: 60%;
+        right: 35%;
+        animation: float1 7s ease-in-out infinite reverse;
+      }
+
+      @keyframes float1 {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+        50% {
+          transform: translate(-20px, -35px) scale(1.06);
+        }
+      }
+      @keyframes float2 {
+        0%,
+        100% {
+          transform: translate(0, 0);
+        }
+        50% {
+          transform: translate(25px, -25px);
+        }
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 780px;
+      }
+
+      .hero-eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--accent);
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        margin-bottom: 1.8rem;
+        opacity: 0;
+        animation: fadeUp 0.8s forwards 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .hero-eyebrow::before {
+        content: "";
+        width: 40px;
+        height: 1px;
+        background: var(--accent);
+        opacity: 0.6;
+        transition: width 0.4s;
+      }
+      .hero-eyebrow:hover::before {
+        width: 80px;
+      }
+
+      .hero-name {
+        font-family: var(--font-display);
+        font-size: clamp(4rem, 9vw, 7.5rem);
+        font-weight: 700;
+        line-height: 0.92;
+        letter-spacing: -0.02em;
+        opacity: 0;
+        animation: fadeUp 0.9s forwards 0.5s;
+        position: relative;
+      }
+
+      .hero-name .ghost {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(240, 236, 230, 0.25);
+        transition:
+          color 0.5s,
+          text-shadow 0.5s;
+      }
+      .hero-name:hover .ghost {
+        color: var(--text);
+        text-shadow: 0 0 20px rgba(240, 236, 230, 0.2);
+      }
+
+      .hero-role {
+        margin-top: 2rem;
+        font-size: 0.9rem;
+        color: var(--muted);
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+        opacity: 0;
+        animation: fadeUp 0.8s forwards 0.75s;
+      }
+      .hero-role::after {
+        content: "";
+        flex: 1;
+        max-width: 80px;
+        height: 1px;
+        background: var(--muted);
+        opacity: 0.3;
+      }
+
+      .hero-desc {
+        margin-top: 2rem;
+        font-size: 1.05rem;
+        color: var(--muted);
+        max-width: 460px;
+        line-height: 1.85;
+        opacity: 0;
+        animation: fadeUp 0.8s forwards 0.95s;
+      }
+
+      .hero-btns {
+        margin-top: 3rem;
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        opacity: 0;
+        animation: fadeUp 0.8s forwards 1.15s;
+      }
+
+      .magnetic {
+        display: inline-block;
+        transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+
+      .btn-fill {
+        padding: 0.95rem 2.6rem;
+        background: var(--accent);
+        color: var(--bg);
+        text-decoration: none;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        border: none;
+        cursor: none;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(232, 131, 58, 0.1);
+      }
+      .btn-fill::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.18);
+        transform: translateX(-110%) skewX(-10deg);
+        transition: transform 0.45s ease;
+      }
+      .btn-fill:hover {
+        box-shadow: 0 0 40px rgba(232, 131, 58, 0.4);
+      }
+      .btn-fill:hover::after {
+        transform: translateX(110%) skewX(-10deg);
+      }
+
+      .btn-outline {
+        padding: 0.95rem 2.6rem;
+        background: transparent;
+        color: var(--text);
+        text-decoration: none;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        border: 1px solid rgba(240, 236, 230, 0.15);
+        cursor: none;
+        transition: all 0.3s;
+      }
+      .btn-outline:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: rgba(232, 131, 58, 0.05);
+      }
+
+      .hero-side-socials {
+        position: absolute;
+        right: 5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.8rem;
+        z-index: 2;
+        opacity: 0;
+        animation: fadeIn 1s forwards 1.4s;
+      }
+      .hero-side-socials::before,
+      .hero-side-socials::after {
+        content: "";
+        width: 1px;
+        height: 60px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(240, 236, 230, 0.15)
+        );
+      }
+      .hero-side-socials a {
+        color: var(--muted);
+        font-size: 1rem;
+        text-decoration: none;
+        transition:
+          color 0.3s,
+          transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: block;
+      }
+      .hero-side-socials a:hover {
+        color: var(--accent);
+        transform: scale(1.5) rotate(5deg);
+      }
+
+      .scroll-cue {
+        position: absolute;
+        bottom: 2.8rem;
+        left: 5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-family: var(--font-mono);
+        font-size: 0.65rem;
+        color: var(--muted);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        opacity: 0;
+        animation: fadeIn 1s forwards 1.6s;
+      }
+      .scroll-bar {
+        width: 50px;
+        height: 1px;
+        background: var(--muted);
+        overflow: hidden;
+        position: relative;
+      }
+      .scroll-bar::after {
+        content: "";
+        position: absolute;
+        left: -100%;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--accent);
+        animation: slide 2s ease-in-out infinite;
+      }
+      @keyframes slide {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(32px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      section {
+        padding: 8rem 5rem;
+        position: relative;
+      }
+
+      .sec-label {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        color: var(--accent);
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        margin-bottom: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .sec-label::after {
+        content: "";
+        flex: 1;
+        max-width: 50px;
+        height: 1px;
+        background: var(--accent);
+        opacity: 0.45;
+      }
+
+      .sec-title {
+        font-family: var(--font-display);
+        font-size: clamp(2.8rem, 5vw, 4.2rem);
+        font-weight: 700;
+        line-height: 1.05;
+        margin-bottom: 4.5rem;
+        transition: transform 0.3s;
+      }
+      .sec-title em {
+        font-style: italic;
+        font-weight: 300;
+        opacity: 0.35;
+        transition: color 0.3s;
+      }
+      .sec-title:hover em {
+        color: var(--accent);
+        opacity: 0.8;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(36px) scale(0.98);
+        transition:
+          opacity 0.85s cubic-bezier(0.25, 1, 0.5, 1),
+          transform 0.85s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      #about {
+        background: var(--surface);
+      }
+
+      .about-grid {
+        display: grid;
+        grid-template-columns: 360px 1fr;
+        gap: 7rem;
+        align-items: center;
+      }
+
+      .photo-frame {
+        position: relative;
+        perspective: 1000px;
+      }
+
+      .photo-box {
+        width: 100%;
+        aspect-ratio: 3/4;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        transform-style: preserve-3d;
+        transition: transform 0.2s ease-out;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      }
+      .photo-box::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          160deg,
+          transparent 40%,
+          rgba(232, 131, 58, 0.15) 100%
+        );
+        transform: translateZ(20px);
+      }
+      .photo-box i {
+        font-size: 3.5rem;
+        color: var(--accent);
+        opacity: 0.35;
+        transform: translateZ(40px);
+        transition:
+          opacity 0.3s,
+          transform 0.3s;
+      }
+      .photo-box:hover i {
+        opacity: 1;
+        transform: translateZ(50px) scale(1.1);
+      }
+      .photo-box span {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        color: var(--muted);
+        letter-spacing: 0.18em;
+        transform: translateZ(30px);
+      }
+
+      .photo-frame::before {
+        content: "";
+        position: absolute;
+        top: -14px;
+        left: -14px;
+        right: 14px;
+        bottom: 14px;
+        border: 1px solid rgba(232, 131, 58, 0.25);
+        pointer-events: none;
+        transition: transform 0.3s;
+      }
+      .photo-frame:hover::before {
+        transform: translateZ(-20px);
+        border-color: rgba(232, 131, 58, 0.5);
+      }
+
+      .photo-badge {
+        position: absolute;
+        bottom: -18px;
+        right: -18px;
+        width: 96px;
+        height: 96px;
+        background: var(--accent);
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 20px rgba(232, 131, 58, 0.3);
+        z-index: 5;
+      }
+      .photo-badge strong {
+        font-family: var(--font-display);
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--bg);
+        line-height: 1;
+      }
+      .photo-badge small {
+        font-size: 0.5rem;
+        font-weight: 600;
+        color: var(--bg);
+        letter-spacing: 0.05em;
+        text-align: center;
+        line-height: 1.2;
+        margin-top: 2px;
+      }
+
+      .about-text h3 {
+        font-family: var(--font-display);
+        font-size: 2.1rem;
+        font-weight: 400;
+        font-style: italic;
+        color: var(--accent2);
+        margin-bottom: 1.8rem;
+      }
+      .about-text p {
+        color: var(--muted);
+        line-height: 1.9;
+        font-size: 0.98rem;
+        margin-bottom: 1.1rem;
+      }
+
+      .about-stats {
+        margin-top: 3rem;
+        padding-top: 3rem;
+        border-top: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+      .stat-item {
+        text-align: center;
+        transition: transform 0.3s;
+      }
+      .stat-item:hover {
+        transform: translateY(-5px);
+      }
+      .stat-num {
+        display: block;
+        font-family: var(--font-display);
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--accent);
+        line-height: 1;
+        text-shadow: 0 0 15px rgba(232, 131, 58, 0.2);
+      }
+      .stat-lbl {
+        font-size: 0.72rem;
+        color: var(--muted);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-top: 0.4rem;
+        display: block;
+      }
+
+      #skills {
+        background: var(--bg);
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5rem;
+      }
+
+      .skill-cat-label {
+        font-family: var(--font-display);
+        font-size: 1.25rem;
+        font-style: italic;
+        color: var(--accent2);
+        margin-bottom: 2rem;
+      }
+
+      .skill-row {
+        margin-bottom: 1.9rem;
+      }
+      .skill-meta {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.55rem;
+      }
+      .skill-nm {
+        font-size: 0.85rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+      }
+      .skill-pc {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--accent);
+      }
+      .skill-track {
+        height: 2px;
+        background: rgba(255, 255, 255, 0.06);
+        position: relative;
+        overflow: visible;
+      }
+      .skill-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent), var(--accent2));
+        width: 0;
+        transition: width 1.5s cubic-bezier(0.25, 1, 0.2, 1);
+        position: relative;
+      }
+      .skill-fill::after {
+        content: "";
+        position: absolute;
+        right: -4px;
+        top: -3px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent2);
+        box-shadow: 0 0 10px rgba(200, 169, 110, 0.8);
+      }
+
+      .tags-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.7rem;
+        margin-top: 2.5rem;
+      }
+      .tag {
+        padding: 0.45rem 1rem;
+        border: 1px solid var(--border);
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+        cursor: none;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+        border-radius: 2px;
+      }
+      .tag-inner {
+        position: relative;
+        z-index: 1;
+      }
+      .tag::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--accent);
+        transform: translateY(100%);
+        transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+      .tag:hover {
+        color: var(--bg);
+        border-color: var(--accent);
+      }
+      .tag:hover::before {
+        transform: translateY(0);
+      }
+
+      .lang-list {
+        margin-top: 0.5rem;
+      }
+      .lang-row {
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+        padding: 0.9rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        transition: padding-left 0.3s;
+      }
+      .lang-row:hover {
+        padding-left: 10px;
+        border-bottom-color: rgba(232, 131, 58, 0.2);
+      }
+      .lang-name-text {
+        font-size: 0.88rem;
+        font-weight: 500;
+        width: 75px;
+        flex-shrink: 0;
+      }
+      .lang-pips {
+        display: flex;
+        gap: 6px;
+      }
+      .pip {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        transition:
+          background 0.4s ease,
+          box-shadow 0.4s ease,
+          transform 0.2s;
+      }
+      .pip.lit {
+        background: var(--accent);
+        box-shadow: 0 0 8px rgba(232, 131, 58, 0.5);
+      }
+      .lang-row:hover .pip.lit {
+        transform: scale(1.2);
+      }
+      .lang-level-text {
+        font-family: var(--font-mono);
+        font-size: 0.65rem;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        margin-left: auto;
+      }
+
+      #experience {
+        background: var(--surface);
+      }
+
+      .timeline {
+        position: relative;
+        padding-left: 3.5rem;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          var(--accent) 20%,
+          var(--accent2) 70%,
+          transparent 100%
+        );
+        opacity: 0.35;
+        transform-origin: top;
+        animation: drawLine 3s ease forwards;
+      }
+
+      @keyframes drawLine {
+        0% {
+          transform: scaleY(0);
+        }
+        100% {
+          transform: scaleY(1);
+        }
+      }
+
+      .tl-item {
+        position: relative;
+        margin-bottom: 4.5rem;
+        cursor: none;
+      }
+      .tl-item::before {
+        content: "";
+        position: absolute;
+        left: -3.5rem;
+        top: 10px;
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--bg);
+        border: 2px solid var(--accent);
+        box-shadow: 0 0 0 4px rgba(232, 131, 58, 0.1);
+        transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        margin-left: -1px;
+      }
+      .tl-item:hover::before {
+        background: var(--accent);
+        box-shadow:
+          0 0 0 8px rgba(232, 131, 58, 0.2),
+          0 0 20px rgba(232, 131, 58, 0.5);
+        transform: scale(1.2);
+      }
+      .tl-date {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        color: var(--accent);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        margin-bottom: 0.4rem;
+        transition: transform 0.3s;
+        display: inline-block;
+      }
+      .tl-item:hover .tl-date {
+        transform: translateX(5px);
+      }
+      .tl-company {
+        font-size: 0.75rem;
+        color: var(--muted);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 0.6rem;
+      }
+      .tl-role {
+        font-family: var(--font-display);
+        font-size: 1.7rem;
+        font-weight: 600;
+        margin-bottom: 1.2rem;
+        transition: color 0.3s;
+      }
+      .tl-item:hover .tl-role {
+        color: var(--accent2);
+      }
+      .tl-items {
+        list-style: none;
+      }
+      .tl-items li {
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.75;
+        padding-left: 1.2rem;
+        position: relative;
+        margin-bottom: 0.5rem;
+        transition: color 0.3s;
+      }
+      .tl-items li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+        opacity: 0.55;
+        font-size: 0.75rem;
+        top: 2px;
+        transition: transform 0.3s;
+      }
+      .tl-item:hover .tl-items li {
+        color: var(--text);
+      }
+      .tl-item:hover .tl-items li::before {
+        transform: translateX(3px);
+        opacity: 1;
+      }
+
+      #education {
+        background: var(--bg);
+      }
+
+      .acc-item {
+        border: 1px solid var(--border);
+        margin-bottom: 1rem;
+        transition:
+          border-color 0.4s,
+          transform 0.3s,
+          box-shadow 0.3s;
+        overflow: hidden;
+        border-radius: 4px;
+      }
+      .acc-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+      .acc-item.open {
+        border-color: var(--accent);
+      }
+
+      .acc-head {
+        padding: 1.6rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: none;
+        transition: background 0.3s;
+        user-select: none;
+      }
+      .acc-head:hover {
+        background: rgba(232, 131, 58, 0.04);
+      }
+      .acc-yr {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        color: var(--accent);
+        letter-spacing: 0.2em;
+        margin-bottom: 0.5rem;
+      }
+      .acc-title {
+        font-family: var(--font-display);
+        font-size: 1.4rem;
+        font-weight: 600;
+      }
+      .acc-school {
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-top: 0.25rem;
+        letter-spacing: 0.05em;
+      }
+      .acc-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--muted);
+        font-size: 0.75rem;
+        flex-shrink: 0;
+        transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+      .acc-item.open .acc-icon {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--bg);
+        transform: rotate(135deg);
+      }
+
+      .acc-body {
+        display: none;
+        padding: 0 2rem 1.8rem;
+      }
+      .acc-body p {
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.85;
+      }
+      .acc-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1.2rem;
+      }
+      .acc-tag {
+        padding: 0.3rem 0.8rem;
+        background: rgba(232, 131, 58, 0.08);
+        border: 1px solid rgba(232, 131, 58, 0.2);
+        font-family: var(--font-mono);
+        font-size: 0.65rem;
+        color: var(--accent);
+        letter-spacing: 0.08em;
+        border-radius: 2px;
+      }
+
+      #projects {
+        background: var(--surface);
+      }
+      #react-projects {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+        gap: 2rem;
+        perspective: 1000px;
+      }
+
+      #contact {
+        background: var(--bg);
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: 7rem;
+        align-items: start;
+      }
+      .contact-left h3 {
+        font-family: var(--font-display);
+        font-size: 2rem;
+        font-weight: 400;
+        font-style: italic;
+        color: var(--accent2);
+        margin-bottom: 1.5rem;
+      }
+      .contact-left p {
+        color: var(--muted);
+        line-height: 1.85;
+        font-size: 0.95rem;
+        margin-bottom: 2.5rem;
+      }
+
+      .clink {
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.88rem;
+        margin-bottom: 1rem;
+        transition:
+          color 0.3s,
+          transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        width: fit-content;
+      }
+      .clink:hover {
+        color: var(--text);
+        transform: translateX(10px);
+      }
+      .clink-icon {
+        width: 42px;
+        height: 42px;
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+        transition: all 0.3s;
+        border-radius: 50%;
+      }
+      .clink:hover .clink-icon {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--bg);
+        box-shadow: 0 0 15px rgba(232, 131, 58, 0.4);
+        transform: scale(1.1);
+      }
+
+      footer {
+        padding: 2.5rem 5rem;
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--surface);
+      }
+      footer p {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      footer span {
+        color: var(--accent);
+        transition: text-shadow 0.3s;
+      }
+      footer span:hover {
+        text-shadow: 0 0 10px var(--accent);
+      }
+
+      @media (max-width: 1024px) {
+        nav,
+        nav.scrolled {
+          padding: 1.5rem 2.5rem;
+        }
+        section {
+          padding: 6rem 2.5rem;
+        }
+        #hero {
+          padding: 0 2.5rem;
+        }
+        .hero-side-socials {
+          display: none;
+        }
+        .scroll-cue {
+          left: 2.5rem;
+        }
+        .about-grid {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+        .photo-box {
+          aspect-ratio: 1/1;
+          max-width: 340px;
+          margin: 0 auto;
+        }
+        .skills-grid {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+        .contact-grid {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+        .nav-links {
+          display: none;
+        }
+        .hamburger {
+          display: flex;
+        }
+        footer {
+          padding: 2rem 2.5rem;
+        }
+      }
+      @media (max-width: 640px) {
+        .hero-name {
+          font-size: 3.2rem;
+        }
+        .hero-btns {
+          flex-direction: column;
+        }
+        .about-stats {
+          grid-template-columns: 1fr 1fr;
+        }
+        footer {
+          flex-direction: column;
+          gap: 0.8rem;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="scroll-progress"></div>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <nav id="nav">
+      <a href="#hero" class="nav-logo magnetic">C<em>.</em>Naai</a>
+      <ul class="nav-links">
+        <li><a href="#about" data-i18n="nav_about">À Propos</a></li>
+        <li><a href="#skills" data-i18n="nav_skills">Compétences</a></li>
+        <li><a href="#experience" data-i18n="nav_exp">Expériences</a></li>
+        <li><a href="#education" data-i18n="nav_edu">Formation</a></li>
+        <li><a href="#projects" data-i18n="nav_proj">Projets</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+        <li>
+          <div class="lang-switch">
+            <button class="lang-btn active" data-lang="fr">FR</button>
+            <span class="lang-sep">|</span>
+            <button class="lang-btn" data-lang="en">EN</button>
+          </div>
+        </li>
+      </ul>
+      <button class="hamburger magnetic" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about" class="mob-link" data-i18n="nav_about">À Propos</a>
+      <a href="#skills" class="mob-link" data-i18n="nav_skills">Compétences</a>
+      <a href="#experience" class="mob-link" data-i18n="nav_exp">Expériences</a>
+      <a href="#education" class="mob-link" data-i18n="nav_edu">Formation</a>
+      <a href="#projects" class="mob-link" data-i18n="nav_proj">Projets</a>
+      <a href="#contact" class="mob-link" data-i18n="nav_contact">Contact</a>
+      <div class="lang-switch" style="margin-top: 1rem">
+        <button class="lang-btn active" data-lang="fr">FR</button>
+        <span class="lang-sep">|</span>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+    </div>
+
+    <section id="hero">
+      <div class="hero-bg-grid"></div>
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+
+      <div class="hero-content">
+        <p class="hero-eyebrow" data-i18n="hero_eyebrow">
+          // Développeur Full-Stack &nbsp;·&nbsp; Marrakech, MA
+        </p>
+        <h1 class="hero-name">
+          Charaf<br />
+          <span class="ghost">Eddine.</span>
+        </h1>
+        <p class="hero-role" data-i18n="hero_role">
+          ReactJS &amp; Laravel Developer
+        </p>
+        <p class="hero-desc" data-i18n="hero_desc">
+          Je crée des interfaces modernes, sécurisées et centrées sur
+          l'utilisateur. Passionné par le design responsive, les animations et
+          la performance web.
+        </p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn-fill magnetic" data-i18n="btn_projects"
+            >Voir mes projets</a
+          >
+          <a
+            href="#contact"
+            class="btn-outline magnetic"
+            data-i18n="btn_contact"
+            >Me contacter</a
+          >
+        </div>
+      </div>
+
+      <div class="hero-side-socials">
+        <a
+          href="https://github.com/sharaf-naai"
+          target="_blank"
+          title="GitHub"
+          class="magnetic"
+          ><i class="fab fa-github"></i
+        ></a>
+        <a
+          href="https://www.linkedin.com/in/charaf-e-naai-3970b4219/"
+          target="_blank"
+          title="LinkedIn"
+          class="magnetic"
+          ><i class="fab fa-linkedin"></i
+        ></a>
+        <a href="mailto:c.naai8980@uca.ac.ma" title="Email" class="magnetic"
+          ><i class="fas fa-envelope"></i
+        ></a>
+        <a href="tel:+212669321576" title="Téléphone" class="magnetic"
+          ><i class="fas fa-phone"></i
+        ></a>
+      </div>
+
+      <div class="scroll-cue" data-i18n="scroll_cue">
+        <div class="scroll-bar"></div>
+        Scroll to explore
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="sec-label reveal" data-i18n="lbl_about">
+        01 &mdash; À Propos
+      </div>
+      <div class="about-grid">
+        <div class="photo-frame reveal">
+          <div class="photo-box">
+            <i class="fas fa-user"></i>
+            <span>// photo.jpg</span>
+          </div>
+          <div class="photo-badge magnetic">
+            <strong>∞</strong>
+            <small data-i18n="badge_exp">LIGNES<br />CODE</small>
+          </div>
+        </div>
+        <div class="about-text reveal">
+          <h3 data-i18n="about_title">Bonjour, je suis Charaf Eddine</h3>
+          <p data-i18n="about_p1">
+            Étudiant en Sciences Informatiques à la Faculté des Sciences
+            Semlalia de Marrakech, je me spécialise dans le développement web
+            full-stack avec une passion pour les interfaces élégantes et les
+            architectures robustes.
+          </p>
+          <p data-i18n="about_p2">
+            Côté frontend, je maîtrise ReactJS, TailwindCSS et GSAP pour créer
+            des expériences visuelles engageantes. Côté backend, je construis
+            des APIs sécurisées avec Laravel et des systèmes de bases de données
+            optimisés.
+          </p>
+          <p data-i18n="about_p3">
+            Curieux de nature, je pratique aussi le CTF sur Hack The Box pour
+            affûter mes compétences en cybersécurité, alliant créativité et
+            rigueur technique. Basé à Tamansourt — disponible pour des projets
+            freelance et collaborations.
+          </p>
+          <div class="about-stats">
+            <div class="stat-item">
+              <span class="stat-num">5+</span>
+              <span class="stat-lbl" data-i18n="stat_proj">Projets</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">3</span>
+              <span class="stat-lbl" data-i18n="stat_lang">Langues</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">100%</span>
+              <span class="stat-lbl" data-i18n="stat_pass">Passion</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="margin-top: 6rem">
+        <div id="react-bughunt"></div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="sec-label reveal" data-i18n="lbl_skills">
+        02 &mdash; Compétences
+      </div>
+      <h2 class="sec-title reveal" data-i18n="title_skills">
+        Mon Arsenal <em>Technique</em>
+      </h2>
+      <div class="skills-grid">
+        <div class="reveal">
+          <p class="skill-cat-label" data-i18n="skill_web">Développement Web</p>
+
+          <div class="skill-row">
+            <div class="skill-meta">
+              <span class="skill-nm">ReactJS</span
+              ><span class="skill-pc">88%</span>
+            </div>
+            <div class="skill-track">
+              <div class="skill-fill" data-w="88"></div>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-meta">
+              <span class="skill-nm">Laravel</span
+              ><span class="skill-pc">82%</span>
+            </div>
+            <div class="skill-track">
+              <div class="skill-fill" data-w="82"></div>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-meta">
+              <span class="skill-nm">TailwindCSS</span
+              ><span class="skill-pc">90%</span>
+            </div>
+            <div class="skill-track">
+              <div class="skill-fill" data-w="90"></div>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-meta">
+              <span class="skill-nm">GSAP Animations</span
+              ><span class="skill-pc">78%</span>
+            </div>
+            <div class="skill-track">
+              <div class="skill-fill" data-w="78"></div>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-meta">
+              <span class="skill-nm">WordPress / Prestashop</span
+              ><span class="skill-pc">75%</span>
+            </div>
+            <div class="skill-track">
+              <div class="skill-fill" data-w="75"></div>
+            </div>
+          </div>
+
+          <div class="tags-wrap">
+            <div class="tag magnetic"><span class="tag-inner">HTML5</span></div>
+            <div class="tag magnetic"><span class="tag-inner">CSS3</span></div>
+            <div class="tag magnetic">
+              <span class="tag-inner">JavaScript</span>
+            </div>
+            <div class="tag magnetic"><span class="tag-inner">PHP</span></div>
+            <div class="tag magnetic"><span class="tag-inner">MySQL</span></div>
+            <div class="tag magnetic"><span class="tag-inner">Git</span></div>
+            <div class="tag magnetic">
+              <span class="tag-inner">Photoshop</span>
+            </div>
+            <div class="tag magnetic">
+              <span class="tag-inner">Illustrator</span>
+            </div>
+            <div class="tag magnetic">
+              <span class="tag-inner">CTF / HackTheBox</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <p class="skill-cat-label" data-i18n="skill_lang">Langues</p>
+          <div class="lang-list">
+            <div class="lang-row">
+              <span class="lang-name-text" data-i18n="lang_ar">Arabe</span>
+              <div class="lang-pips">
+                <div class="pip" data-lit="1"></div>
+                <div class="pip" data-lit="1"></div>
+                <div class="pip" data-lit="1"></div>
+                <div class="pip" data-lit="1"></div>
+                <div class="pip" data-lit="1"></div>
+              </div>
+              <span class="lang-level-text" data-i18n="lvl_native"
+                >Maternelle</span
+              >
+            </div>
+            <div class="lang-row">
+              <span class="lang-name-text" data-i18n="lang_fr">Français</span>
+              <div class="lang-pips">
+                <div class="pip" data-lit="1"></div>
+                <div class="pip" data-lit="1"></div>
+                <div class="pip" data-lit="1"></div>
+                <div class="pip" data-lit="1"></div>
+                <div class="pip" data-lit="0"></div>
+              </div>
+              <span class="lang-level-text" data-i18n="lvl_fluent"
+                >Courant</span
+              >
+            </div>
+            <div class="lang-row">
+              <span class="lang-name-text" data-i18n="lang_en">Anglais</span>
+              <div class="lang-pips">
+                <div class="pip" data-lit="1"></div>
+                <div class="pip" data-lit="1"></div>
+                <div class="pip" data-lit="1"></div>
+                <div class="pip" data-lit="1"></div>
+                <div class="pip" data-lit="0"></div>
+              </div>
+              <span class="lang-level-text" data-i18n="lvl_adv">Avancé C1</span>
+            </div>
+          </div>
+
+          <p class="skill-cat-label" style="margin-top: 3rem">Soft Skills</p>
+          <div class="skill-row">
+            <div class="skill-meta">
+              <span class="skill-nm">Communication</span
+              ><span class="skill-pc">92%</span>
+            </div>
+            <div class="skill-track">
+              <div class="skill-fill" data-w="92"></div>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-meta">
+              <span class="skill-nm">Problem Solving</span
+              ><span class="skill-pc">88%</span>
+            </div>
+            <div class="skill-track">
+              <div class="skill-fill" data-w="88"></div>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-meta">
+              <span class="skill-nm" data-i18n="skill_adapt">Adaptabilité</span
+              ><span class="skill-pc">85%</span>
+            </div>
+            <div class="skill-track">
+              <div class="skill-fill" data-w="85"></div>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-meta">
+              <span class="skill-nm" data-i18n="skill_neg">Négociation B2B</span
+              ><span class="skill-pc">80%</span>
+            </div>
+            <div class="skill-track">
+              <div class="skill-fill" data-w="80"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="sec-label reveal" data-i18n="lbl_exp">
+        03 &mdash; Expériences
+      </div>
+      <h2 class="sec-title reveal" data-i18n="title_exp">
+        Mon Parcours <em>Professionnel</em>
+      </h2>
+
+      <div class="timeline">
+        <div class="tl-item reveal">
+          <div class="tl-date" data-i18n="exp1_date">Avril 2026 — Présent</div>
+          <div class="tl-company">Code212 Center</div>
+          <div class="tl-role" data-i18n="exp1_role">
+            Développeur Laravel Backend
+          </div>
+          <ul class="tl-items">
+            <li data-i18n="exp1_p1">
+              Architecture d'une plateforme de stages pour étudiants avec
+              conception de bases de données relationnelles optimisées
+            </li>
+            <li data-i18n="exp1_p2">
+              Implémentation de l'authentification sécurisée (JWT / Sanctum) et
+              protections contre les failles web communes (XSS, CSRF, SQL
+              Injection)
+            </li>
+          </ul>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-date" data-i18n="exp2_date">
+            Janvier 2026 — Présent
+          </div>
+          <div class="tl-company">Freelancer</div>
+          <div class="tl-role" data-i18n="exp2_role">
+            Développeur React Frontend
+          </div>
+          <ul class="tl-items">
+            <li data-i18n="exp2_p1">
+              Création de sites responsives avec React, Tailwind CSS et
+              WordPress pour divers clients
+            </li>
+            <li data-i18n="exp2_p2">
+              Conception d'une plateforme de prise de rendez-vous médicaux avec
+              gestion de planning complète
+            </li>
+            <li data-i18n="exp2_p3">
+              Intégration d'animations fluides et avancées via GSAP pour
+              maximiser l'engagement utilisateur
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="sec-label reveal" data-i18n="lbl_edu">
+        04 &mdash; Formation
+      </div>
+      <h2 class="sec-title reveal" data-i18n="title_edu">
+        Mon Parcours <em>Académique</em>
+      </h2>
+
+      <div class="acc-container reveal">
+        <div class="acc-item">
+          <div class="acc-head">
+            <div>
+              <div class="acc-yr" data-i18n="edu1_date">2023 — Présent</div>
+              <div class="acc-title" data-i18n="edu1_title">
+                DEUG Sciences Informatiques
+              </div>
+              <div class="acc-school" data-i18n="edu1_school">
+                Faculté des Sciences Semlalia, Marrakech
+              </div>
+            </div>
+            <div class="acc-icon"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="acc-body">
+            <p data-i18n="edu1_desc">
+              Formation universitaire en sciences informatiques couvrant les
+              fondamentaux de la programmation, des algorithmes, des réseaux et
+              des systèmes d'exploitation. Développement d'une solide base
+              théorique complétée par des projets pratiques intensifs en
+              développement web full-stack.
+            </p>
+            <div class="acc-tags">
+              <span class="acc-tag magnetic">Algorithmes</span
+              ><span class="acc-tag magnetic">POO</span
+              ><span class="acc-tag magnetic">Bases de données</span
+              ><span class="acc-tag magnetic">Dev Web</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <div class="acc-head">
+            <div>
+              <div class="acc-yr">2023</div>
+              <div class="acc-title" data-i18n="edu2_title">
+                Baccalauréat Scientifique
+              </div>
+              <div class="acc-school" data-i18n="edu2_school">
+                Filière Physique-Chimie, Maroc
+              </div>
+            </div>
+            <div class="acc-icon"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="acc-body">
+            <p data-i18n="edu2_desc">
+              Diplôme de baccalauréat scientifique avec spécialisation en
+              physique-chimie. Cette formation a renforcé la rigueur analytique
+              et la pensée logique, compétences directement transférables au
+              développement informatique et à la résolution de problèmes
+              complexes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="sec-label reveal" data-i18n="lbl_proj">
+        05 &mdash; Projets
+      </div>
+      <h2 class="sec-title reveal" data-i18n="title_proj">
+        Mes Créations <em>Récentes</em>
+      </h2>
+      <div id="react-projects" class="reveal"></div>
+    </section>
+
+    <section id="contact">
+      <div class="sec-label reveal" data-i18n="lbl_contact">
+        06 &mdash; Contact
+      </div>
+      <h2 class="sec-title reveal" data-i18n="title_contact">
+        Travaillons <em>Ensemble</em>
+      </h2>
+      <div class="contact-grid">
+        <div class="contact-left reveal">
+          <h3 data-i18n="contact_title">Restons en contact</h3>
+          <p data-i18n="contact_desc">
+            Vous avez un projet en tête ? Une collaboration à proposer ?
+            N'hésitez pas à m'écrire, je réponds dans les 24h.
+          </p>
+          <a href="mailto:c.naai8980@uca.ac.ma" class="clink magnetic">
+            <div class="clink-icon"><i class="fas fa-envelope"></i></div>
+            c.naai8980@uca.ac.ma
+          </a>
+          <a
+            href="https://github.com/sharaf-naai"
+            target="_blank"
+            class="clink magnetic"
+          >
+            <div class="clink-icon"><i class="fab fa-github"></i></div>
+            github.com/sharaf-naai
+          </a>
+          <a
+            href="https://www.linkedin.com/in/charaf-e-naai-3970b4219/"
+            target="_blank"
+            class="clink magnetic"
+          >
+            <div class="clink-icon"><i class="fab fa-linkedin"></i></div>
+            linkedin.com/in/charaf-e-naai
+          </a>
+          <a href="tel:+212669321576" class="clink magnetic">
+            <div class="clink-icon"><i class="fas fa-phone"></i></div>
+            +212 669-321576
+          </a>
+        </div>
+        <div id="react-contact" class="reveal"></div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        © 2026 <span class="magnetic">Charaf Eddine Naai</span>
+        <span data-i18n="footer_text">— Conçu avec passion</span>
+      </p>
+      <p>Marrakech, Maroc <span>✦</span></p>
+    </footer>
+
+    <script>
+      const translations = {
+        fr: {
+          nav_about: "À Propos",
+          nav_skills: "Compétences",
+          nav_exp: "Expériences",
+          nav_edu: "Formation",
+          nav_proj: "Projets",
+          nav_contact: "Contact",
+          hero_eyebrow: "// Développeur Full-Stack  ·  Marrakech, MA",
+          hero_role: "ReactJS & Laravel Developer",
+          hero_desc:
+            "Je crée des interfaces modernes, sécurisées et centrées sur l'utilisateur. Passionné par le design responsive, les animations et la performance web.",
+          btn_projects: "Voir mes projets",
+          btn_contact: "Me contacter",
+          scroll_cue: "Scroll to explore",
+          lbl_about: "01 — À Propos",
+          badge_exp: "LIGNES<br>CODE",
+          about_title: "Bonjour, je suis Charaf Eddine",
+          about_p1:
+            "Étudiant en Sciences Informatiques à la Faculté des Sciences Semlalia de Marrakech, je me spécialise dans le développement web full-stack avec une passion pour les interfaces élégantes et les architectures robustes.",
+          about_p2:
+            "Côté frontend, je maîtrise ReactJS, TailwindCSS et GSAP pour créer des expériences visuelles engageantes. Côté backend, je construis des APIs sécurisées avec Laravel et des systèmes de bases de données optimisés.",
+          about_p3:
+            "Curieux de nature, je pratique aussi le CTF sur Hack The Box pour affûter mes compétences en cybersécurité, alliant créativité et rigueur technique. Basé à Tamansourt — disponible pour des projets freelance et collaborations.",
+          stat_proj: "Projets",
+          stat_lang: "Langues",
+          stat_pass: "Passion",
+          skill_web: "Développement Web",
+          skill_lang: "Langues",
+          lang_ar: "Arabe",
+          lang_fr: "Français",
+          lang_en: "Anglais",
+          lvl_native: "Maternelle",
+          lvl_fluent: "Courant",
+          lvl_adv: "Avancé C1",
+          skill_adapt: "Adaptabilité",
+          skill_neg: "Négociation B2B",
+          lbl_skills: "02 — Compétences",
+          title_skills: "Mon Arsenal <em>Technique</em>",
+          lbl_exp: "03 — Expériences",
+          title_exp: "Mon Parcours <em>Professionnel</em>",
+          exp1_date: "Avril 2026 — Présent",
+          exp1_role: "Développeur Laravel Backend",
+          exp1_p1:
+            "Architecture d'une plateforme de stages pour étudiants avec conception de bases de données relationnelles optimisées",
+          exp1_p2:
+            "Implémentation de l'authentification sécurisée (JWT / Sanctum) et protections contre les failles web communes (XSS, CSRF, SQL Injection)",
+          exp2_date: "Janvier 2026 — Présent",
+          exp2_role: "Développeur React Frontend",
+          exp2_p1:
+            "Création de sites responsives avec React, Tailwind CSS et WordPress pour divers clients",
+          exp2_p2:
+            "Conception d'une plateforme de prise de rendez-vous médicaux avec gestion de planning complète",
+          exp2_p3:
+            "Intégration d'animations fluides et avancées via GSAP pour maximiser l'engagement utilisateur",
+          lbl_edu: "04 — Formation",
+          title_edu: "Mon Parcours <em>Académique</em>",
+          edu1_date: "2023 — Présent",
+          edu1_title: "DEUG Sciences Informatiques",
+          edu1_school: "Faculté des Sciences Semlalia, Marrakech",
+          edu1_desc:
+            "Formation universitaire en sciences informatiques couvrant les fondamentaux de la programmation, des algorithmes, des réseaux et des systèmes d'exploitation. Développement d'une solide base théorique complétée par des projets pratiques intensifs en développement web full-stack.",
+          edu2_title: "Baccalauréat Scientifique",
+          edu2_school: "Filière Physique-Chimie, Maroc",
+          edu2_desc:
+            "Diplôme de baccalauréat scientifique avec spécialisation en physique-chimie. Cette formation a renforcé la rigueur analytique et la pensée logique, compétences directement transférables au développement informatique et à la résolution de problèmes complexes.",
+          lbl_proj: "05 — Projets",
+          title_proj: "Mes Créations <em>Récentes</em>",
+          lbl_contact: "06 — Contact",
+          title_contact: "Travaillons <em>Ensemble</em>",
+          contact_title: "Restons en contact",
+          contact_desc:
+            "Vous avez un projet en tête ? Une collaboration à proposer ? N'hésitez pas à m'écrire, je réponds dans les 24h.",
+          footer_text: "— Conçu avec passion",
+        },
+        en: {
+          nav_about: "About",
+          nav_skills: "Skills",
+          nav_exp: "Experience",
+          nav_edu: "Education",
+          nav_proj: "Projects",
+          nav_contact: "Contact",
+          hero_eyebrow: "// Full-Stack Developer  ·  Marrakech, MA",
+          hero_role: "ReactJS & Laravel Developer",
+          hero_desc:
+            "I build modern, secure, and user-centric interfaces. Passionate about responsive design, animations, and web performance.",
+          btn_projects: "View my projects",
+          btn_contact: "Contact me",
+          scroll_cue: "Scroll to explore",
+          lbl_about: "01 — About",
+          badge_exp: "LINES<br>CODE",
+          about_title: "Hello, I'm Charaf Eddine",
+          about_p1:
+            "Computer Science student at the Faculty of Sciences Semlalia in Marrakech, specializing in full-stack web development with a passion for elegant interfaces and robust architectures.",
+          about_p2:
+            "On the frontend, I use ReactJS, TailwindCSS, and GSAP to create engaging visual experiences. On the backend, I build secure APIs with Laravel and optimized database systems.",
+          about_p3:
+            "Naturally curious, I also practice CTF on Hack The Box to sharpen my cybersecurity skills, combining creativity with technical rigor. Based in Tamansourt — available for freelance projects.",
+          stat_proj: "Projects",
+          stat_lang: "Languages",
+          stat_pass: "Passion",
+          skill_web: "Web Development",
+          skill_lang: "Languages",
+          lang_ar: "Arabic",
+          lang_fr: "French",
+          lang_en: "English",
+          lvl_native: "Native",
+          lvl_fluent: "Fluent",
+          lvl_adv: "Advanced C1",
+          skill_adapt: "Adaptability",
+          skill_neg: "B2B Negotiation",
+          lbl_skills: "02 — Skills",
+          title_skills: "My Technical <em>Arsenal</em>",
+          lbl_exp: "03 — Experience",
+          title_exp: "My Professional <em>Journey</em>",
+          exp1_date: "April 2026 — Present",
+          exp1_role: "Backend Laravel Developer",
+          exp1_p1:
+            "Architected a student internship platform with optimized relational database design",
+          exp1_p2:
+            "Implemented secure authentication (JWT / Sanctum) and protections against common web vulnerabilities (XSS, CSRF, SQLi)",
+          exp2_date: "January 2026 — Present",
+          exp2_role: "Frontend React Developer",
+          exp2_p1:
+            "Created responsive websites using React, Tailwind CSS, and WordPress for various clients",
+          exp2_p2:
+            "Designed a medical appointment booking platform with comprehensive schedule management",
+          exp2_p3:
+            "Integrated fluid and advanced animations via GSAP to maximize user engagement",
+          lbl_edu: "04 — Education",
+          title_edu: "My Academic <em>Background</em>",
+          edu1_date: "2023 — Present",
+          edu1_title: "Associate's in Computer Science",
+          edu1_school: "Faculty of Sciences Semlalia, Marrakech",
+          edu1_desc:
+            "University education in computer science covering fundamentals of programming, algorithms, networks, and operating systems. Developed a solid theoretical base complemented by intensive practical projects.",
+          edu2_title: "Scientific Baccalaureate",
+          edu2_school: "Physics-Chemistry Track, Morocco",
+          edu2_desc:
+            "Scientific high school diploma with a specialization in physics-chemistry. This training reinforced analytical rigor and logical thinking, skills directly transferable to IT development.",
+          lbl_proj: "05 — Projects",
+          title_proj: "My Recent <em>Creations</em>",
+          lbl_contact: "06 — Contact",
+          title_contact: "Let's Work <em>Together</em>",
+          contact_title: "Get in touch",
+          contact_desc:
+            "Have a project in mind? A collaboration to propose? Feel free to write to me, I usually reply within 24 hours.",
+          footer_text: "— Crafted with passion",
+        },
+      };
+      window.currentLang = "fr";
+    </script>
+
+    <script type="text/babel">
+      const { useState, useEffect, useRef } = React;
+
+      const reactTranslations = {
+        fr: {
+          code: "Code source",
+          demo: "Démo live",
+          namePlaceholder: "Votre nom complet",
+          emailPlaceholder: "Votre adresse email",
+          msgPlaceholder: "Décrivez votre projet ou votre demande...",
+          btnSend: "Envoyer le message →",
+          successTitle: "Message envoyé !",
+          successDesc: "Merci pour votre message. Je vous répondrai sous 24h.",
+          errName: "Le nom est requis",
+          errEmail1: "L'email est requis",
+          errEmail2: "Format invalide (ex: nom@domaine.com)",
+          errMsg1: "Le message est requis",
+          errMsg2: "Message trop court (min. 10 caractères)",
+          bhTitle: "Mini-Jeu : La Chasse aux Bugs",
+          bhDesc:
+            "La production est en danger ! Écrasez les bugs avant qu'il ne soit trop tard.",
+          bhBtnPlay: "Lancer le Déploiement (Jouer)",
+          bhScore: "Bugs corrigés",
+          bhTime: "Temps restant",
+          bhEnd: "Déploiement terminé !",
+          bhEndScore: "Score final :",
+          bhEval1: "La prod est en PLS... (Moins de 5)",
+          bhEval2: "Pas mal, la prod tient le coup ! (5 à 10)",
+          bhEval3: "Expert ! Zéro bug en prod. (Plus de 10)",
+        },
+        en: {
+          code: "Source code",
+          demo: "Live demo",
+          namePlaceholder: "Your full name",
+          emailPlaceholder: "Your email address",
+          msgPlaceholder: "Describe your project or inquiry...",
+          btnSend: "Send message →",
+          successTitle: "Message sent!",
+          successDesc:
+            "Thank you for your message. I'll get back to you within 24 hours.",
+          errName: "Name is required",
+          errEmail1: "Email is required",
+          errEmail2: "Invalid format (e.g. name@domain.com)",
+          errMsg1: "Message is required",
+          errMsg2: "Message too short (min. 10 characters)",
+          bhTitle: "Minigame: Bug Hunt",
+          bhDesc:
+            "Production is at risk! Squash the bugs before it's too late.",
+          bhBtnPlay: "Deploy to Prod (Play)",
+          bhScore: "Bugs Fixed",
+          bhTime: "Time Left",
+          bhEnd: "Deployment Finished!",
+          bhEndScore: "Final Score:",
+          bhEval1: "Prod is crying... (Under 5)",
+          bhEval2: "Not bad, prod is stable! (5 to 10)",
+          bhEval3: "Expert! Zero bugs in prod. (Over 10)",
+        },
+      };
+
+      const initialProjects = [
+        {
+          title: { fr: "Plateforme de Stages", en: "Internship Platform" },
+          category: "// Backend · Laravel",
+          description: {
+            fr: "Architecture complète d'une plateforme de gestion de stages pour étudiants. Bases de données relationnelles optimisées, authentification sécurisée.",
+            en: "Complete architecture of a student internship management platform. Optimized relational databases, secure authentication.",
+          },
+          technologies: ["Laravel", "PHP", "MySQL", "Sanctum"],
+          github: "https://github.com/sharaf-naai",
+          demo: null,
+        },
+        {
+          title: { fr: "E-Commerce Dashboard", en: "E-Commerce Dashboard" },
+          category: "// Full-Stack · React/Node",
+          description: {
+            fr: "Tableau de bord d'administration pour e-commerce avec statistiques en temps réel, gestion des stocks et suivi des commandes.",
+            en: "Admin dashboard for e-commerce with real-time statistics, inventory management, and order tracking.",
+          },
+          technologies: ["ReactJS", "TailwindCSS", "Chart.js", "Express"],
+          github: "https://github.com/sharaf-naai",
+          demo: "#",
+        },
+        {
+          title: { fr: "Prise de RDV Médicaux", en: "Medical Appointments" },
+          category: "// Frontend · React",
+          description: {
+            fr: "Plateforme de gestion de rendez-vous médicaux avec calendrier interactif, planning médecins/patients et interface intuitive.",
+            en: "Medical appointment management platform with interactive calendar, doctor/patient scheduling and intuitive interface.",
+          },
+          technologies: ["ReactJS", "Tailwind", "GSAP"],
+          github: "https://github.com/sharaf-naai",
+          demo: null,
+        },
+        {
+          title: { fr: "TaskFlow API", en: "TaskFlow API" },
+          category: "// Backend · REST API",
+          description: {
+            fr: "API RESTful de gestion de tâches avec système d'authentification robuste, filtrage, pagination et tests unitaires.",
+            en: "RESTful task management API with robust authentication system, filtering, pagination, and unit testing.",
+          },
+          technologies: ["Laravel", "PHPUnit", "Postman"],
+          github: "https://github.com/sharaf-naai",
+          demo: null,
+        },
+        {
+          title: {
+            fr: "Sites Clients Responsives",
+            en: "Responsive Client Sites",
+          },
+          category: "// Freelance · Multi-tech",
+          description: {
+            fr: "Développement de plusieurs sites web responsives pour des clients variés. Design mobile-first et optimisation des performances.",
+            en: "Development of several responsive websites for various clients. Mobile-first design and performance optimization.",
+          },
+          technologies: ["WordPress", "Tailwind", "HTML5"],
+          github: null,
+          demo: "#",
+        },
+      ];
+
+      function BugHuntGame() {
+        const [lang, setLang] = useState(window.currentLang);
+        const [score, setScore] = useState(0);
+        const [timeLeft, setTimeLeft] = useState(15);
+        const [isPlaying, setIsPlaying] = useState(false);
+        const [gameOver, setGameOver] = useState(false);
+        const [activeHole, setActiveHole] = useState(null);
+
+        useEffect(() => {
+          const handleLangChange = (e) => setLang(e.detail);
+          window.addEventListener("languageChanged", handleLangChange);
+          return () =>
+            window.removeEventListener("languageChanged", handleLangChange);
+        }, []);
+
+        useEffect(() => {
+          let timerId;
+          let moleId;
+
+          if (isPlaying && timeLeft > 0) {
+            timerId = setInterval(() => {
+              setTimeLeft((prev) => prev - 1);
+            }, 1000);
+
+            moleId = setInterval(() => {
+              const randomHole = Math.floor(Math.random() * 9);
+              setActiveHole(randomHole);
+
+              setTimeout(() => {
+                setActiveHole(null);
+              }, 650);
+            }, 800);
+          } else if (timeLeft === 0 && isPlaying) {
+            setIsPlaying(false);
+            setGameOver(true);
+            setActiveHole(null);
+          }
+
+          return () => {
+            clearInterval(timerId);
+            clearInterval(moleId);
+          };
+        }, [isPlaying, timeLeft]);
+
+        const startGame = () => {
+          setScore(0);
+          setTimeLeft(15);
+          setIsPlaying(true);
+          setGameOver(false);
+        };
+
+        const smashBug = (index) => {
+          if (!isPlaying) return;
+          if (index === activeHole) {
+            setScore((s) => s + 1);
+            setActiveHole(null);
+          }
+        };
+
+        const t = reactTranslations[lang];
+
+        return (
+          <div
+            style={{
+              background: "var(--surface2)",
+              border: "1px solid var(--border)",
+              padding: "2rem",
+              borderRadius: "4px",
+              textAlign: "center",
+              boxShadow: "inset 0 0 20px rgba(0,0,0,0.3)",
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            <h3
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "1.8rem",
+                color: "var(--accent2)",
+                marginBottom: "0.5rem",
+              }}
+            >
+              {t.bhTitle}
+            </h3>
+            <p
+              style={{
+                color: "var(--muted)",
+                fontSize: "0.9rem",
+                marginBottom: "2rem",
+              }}
+            >
+              {t.bhDesc}
+            </p>
+
+            {!isPlaying && !gameOver && (
+              <button
+                onClick={startGame}
+                className="magnetic"
+                style={{
+                  padding: "0.8rem 2rem",
+                  background: "var(--accent)",
+                  color: "var(--bg)",
+                  border: "none",
+                  cursor: "none",
+                  fontFamily: "var(--font-body)",
+                  fontWeight: 600,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  transition: "box-shadow 0.3s",
+                }}
+              >
+                {t.bhBtnPlay}
+              </button>
+            )}
+
+            {gameOver && (
+              <div style={{ marginBottom: "2rem", animation: "fadeIn 0.5s" }}>
+                <h4
+                  style={{
+                    color: "var(--text)",
+                    fontSize: "1.2rem",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  {t.bhEnd}
+                </h4>
+                <p
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    color: "var(--accent)",
+                    fontSize: "1.5rem",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  {t.bhEndScore} {score}
+                </p>
+                <p
+                  style={{
+                    color: "var(--muted)",
+                    fontSize: "0.9rem",
+                    fontStyle: "italic",
+                    marginBottom: "1.5rem",
+                  }}
+                >
+                  {score < 5 ? t.bhEval1 : score <= 10 ? t.bhEval2 : t.bhEval3}
+                </p>
+                <button
+                  onClick={startGame}
+                  className="magnetic"
+                  style={{
+                    padding: "0.6rem 1.5rem",
+                    background: "transparent",
+                    color: "var(--text)",
+                    border: "1px solid var(--accent)",
+                    cursor: "none",
+                    fontFamily: "var(--font-body)",
+                    textTransform: "uppercase",
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  Replay
+                </button>
+              </div>
+            )}
+
+            {(isPlaying || gameOver) && (
+              <div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    maxWidth: "300px",
+                    margin: "0 auto 1.5rem auto",
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.8rem",
+                    color: "var(--muted)",
+                  }}
+                >
+                  <span>
+                    {t.bhScore} :{" "}
+                    <strong
+                      style={{ color: "var(--accent)", fontSize: "1rem" }}
+                    >
+                      {score}
+                    </strong>
+                  </span>
+                  <span>
+                    {t.bhTime} :{" "}
+                    <strong style={{ color: "var(--text)", fontSize: "1rem" }}>
+                      {timeLeft}s
+                    </strong>
+                  </span>
+                </div>
+
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, 1fr)",
+                    gap: "10px",
+                    maxWidth: "300px",
+                    margin: "0 auto",
+                  }}
+                >
+                  {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((index) => (
+                    <div
+                      key={index}
+                      onClick={() => smashBug(index)}
+                      style={{
+                        aspectRatio: "1/1",
+                        background: "rgba(0,0,0,0.3)",
+                        border: "1px solid rgba(255,255,255,0.05)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: "none",
+                        position: "relative",
+                        overflow: "hidden",
+                        borderRadius: "4px",
+                      }}
+                    >
+                      {activeHole === index && isPlaying && (
+                        <i
+                          className="fas fa-bug"
+                          style={{
+                            color: "#e05555",
+                            fontSize: "2rem",
+                            animation: "fadeUp 0.1s ease-out",
+                          }}
+                        ></i>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      function ProjectCard({ project, lang }) {
+        const [hovered, setHovered] = useState(false);
+        const [tilt, setTilt] = useState({ x: 0, y: 0 });
+        const t = reactTranslations[lang];
+
+        const handleMouseMove = (e) => {
+          const rect = e.currentTarget.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const cx = rect.width / 2;
+          const cy = rect.height / 2;
+          setTilt({ x: ((y - cy) / cy) * -8, y: ((x - cx) / cx) * 8 });
+        };
+
+        const handleMouseLeave = () => {
+          setHovered(false);
+          setTilt({ x: 0, y: 0 });
+        };
+
+        return (
+          <div
+            onMouseEnter={() => setHovered(true)}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            style={{
+              background: "var(--surface2)",
+              border: `1px solid ${hovered ? "var(--accent)" : "var(--border)"}`,
+              padding: "2.2rem",
+              transition: "all 0.1s ease-out",
+              transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateY(${hovered ? "-10px" : "0"}) scale3d(${hovered ? "1.02" : "1"}, ${hovered ? "1.02" : "1"}, 1)`,
+              boxShadow: hovered ? "0 20px 40px rgba(232,131,58,0.2)" : "none",
+              position: "relative",
+              overflow: "hidden",
+              cursor: "none",
+              transformStyle: "preserve-3d",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "radial-gradient(circle at 50% -10%, rgba(232,131,58,0.12), transparent 55%)",
+                opacity: hovered ? 1 : 0,
+                transition: "opacity 0.4s",
+                pointerEvents: "none",
+                transform: "translateZ(-10px)",
+              }}
+            />
+            <div
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.65rem",
+                color: "var(--accent)",
+                letterSpacing: "0.25em",
+                textTransform: "uppercase",
+                marginBottom: "1rem",
+                transform: "translateZ(20px)",
+              }}
+            >
+              {project.category}
+            </div>
+            <h3
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "1.55rem",
+                fontWeight: 600,
+                marginBottom: "0.9rem",
+                position: "relative",
+                transform: "translateZ(30px)",
+              }}
+            >
+              {project.title[lang]}
+            </h3>
+            <p
+              style={{
+                color: "var(--muted)",
+                fontSize: "0.88rem",
+                lineHeight: 1.75,
+                marginBottom: "1.6rem",
+                position: "relative",
+                transform: "translateZ(25px)",
+              }}
+            >
+              {project.description[lang]}
+            </p>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "0.5rem",
+                marginBottom: "1.8rem",
+                position: "relative",
+                transform: "translateZ(35px)",
+              }}
+            >
+              {project.technologies.map((tech, i) => (
+                <span
+                  key={i}
+                  style={{
+                    padding: "0.25rem 0.8rem",
+                    background: "rgba(232,131,58,0.09)",
+                    border: "1px solid rgba(232,131,58,0.22)",
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.64rem",
+                    color: "var(--accent)",
+                    letterSpacing: "0.07em",
+                  }}
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                gap: "1.5rem",
+                position: "relative",
+                transform: "translateZ(40px)",
+              }}
+            >
+              {project.github && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    color: "var(--muted)",
+                    textDecoration: "none",
+                    fontSize: "0.8rem",
+                    transition: "color 0.3s",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = "var(--text)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = "var(--muted)")
+                  }
+                >
+                  <i className="fab fa-github"></i> {t.code}
+                </a>
+              )}
+              {project.demo && (
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    color: "var(--muted)",
+                    textDecoration: "none",
+                    fontSize: "0.8rem",
+                    transition: "color 0.3s",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = "var(--accent)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = "var(--muted)")
+                  }
+                >
+                  <i className="fas fa-external-link-alt"></i> {t.demo}
+                </a>
+              )}
+            </div>
+          </div>
+        );
+      }
+
+      function App() {
+        const [lang, setLang] = useState(window.currentLang);
+
+        useEffect(() => {
+          const handleLangChange = (e) => setLang(e.detail);
+          window.addEventListener("languageChanged", handleLangChange);
+          return () =>
+            window.removeEventListener("languageChanged", handleLangChange);
+        }, []);
+
+        return (
+          <React.Fragment>
+            {initialProjects.map((p, i) => (
+              <ProjectCard key={i} project={p} lang={lang} />
+            ))}
+          </React.Fragment>
+        );
+      }
+
+      function ContactApp() {
+        const [lang, setLang] = useState(window.currentLang);
+        const [form, setForm] = useState({ name: "", email: "", message: "" });
+        const [errors, setErrors] = useState({});
+        const [sent, setSent] = useState(false);
+
+        useEffect(() => {
+          const handleLangChange = (e) => setLang(e.detail);
+          window.addEventListener("languageChanged", handleLangChange);
+          return () =>
+            window.removeEventListener("languageChanged", handleLangChange);
+        }, []);
+
+        const t = reactTranslations[lang];
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const validate = () => {
+          const e = {};
+          if (!form.name.trim()) e.name = t.errName;
+          if (!form.email.trim()) e.email = t.errEmail1;
+          else if (!emailRegex.test(form.email)) e.email = t.errEmail2;
+          if (!form.message.trim()) e.message = t.errMsg1;
+          else if (form.message.trim().length < 10) e.message = t.errMsg2;
+          return e;
+        };
+
+        const handleSubmit = () => {
+          const e = validate();
+          setErrors(e);
+          if (!Object.keys(e).length) setSent(true);
+        };
+
+        const baseInput = (field) => ({
+          width: "100%",
+          padding: "1rem 1.2rem",
+          background: "var(--surface2)",
+          border: `1px solid ${errors[field] ? "#e05555" : "var(--border)"}`,
+          color: "var(--text)",
+          fontFamily: "var(--font-body)",
+          fontSize: "0.9rem",
+          outline: "none",
+          transition: "border-color 0.3s, box-shadow 0.3s",
+          display: "block",
+          marginBottom: errors[field] ? "0.3rem" : "1.3rem",
+        });
+
+        const errMsg = {
+          color: "#e05555",
+          fontFamily: "var(--font-mono)",
+          fontSize: "0.7rem",
+          marginBottom: "1rem",
+          display: "block",
+        };
+
+        if (sent) {
+          return (
+            <div
+              style={{
+                padding: "3rem 2rem",
+                border: "1px solid var(--accent)",
+                background: "rgba(232,131,58,0.05)",
+                textAlign: "center",
+                animation: "fadeIn 0.5s forwards",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "2.5rem",
+                  color: "var(--accent)",
+                  marginBottom: "1rem",
+                }}
+              >
+                ✓
+              </div>
+              <h3
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.6rem",
+                  color: "var(--accent)",
+                  marginBottom: "0.7rem",
+                }}
+              >
+                {t.successTitle}
+              </h3>
+              <p style={{ color: "var(--muted)", fontSize: "0.9rem" }}>
+                {t.successDesc}
+              </p>
+            </div>
+          );
+        }
+
+        return (
+          <div>
+            <input
+              type="text"
+              placeholder={t.namePlaceholder}
+              value={form.name}
+              onChange={(e) => {
+                setForm({ ...form, name: e.target.value });
+                setErrors({ ...errors, name: "" });
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = "var(--accent)";
+                e.target.style.boxShadow = "0 0 10px rgba(232,131,58,0.2)";
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = errors.name
+                  ? "#e05555"
+                  : "var(--border)";
+                e.target.style.boxShadow = "none";
+              }}
+              style={baseInput("name")}
+            />
+            {errors.name && <span style={errMsg}>// {errors.name}</span>}
+
+            <input
+              type="email"
+              placeholder={t.emailPlaceholder}
+              value={form.email}
+              onChange={(e) => {
+                setForm({ ...form, email: e.target.value });
+                setErrors({ ...errors, email: "" });
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = "var(--accent)";
+                e.target.style.boxShadow = "0 0 10px rgba(232,131,58,0.2)";
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = errors.email
+                  ? "#e05555"
+                  : "var(--border)";
+                e.target.style.boxShadow = "none";
+              }}
+              style={baseInput("email")}
+            />
+            {errors.email && <span style={errMsg}>// {errors.email}</span>}
+
+            <textarea
+              placeholder={t.msgPlaceholder}
+              rows={6}
+              value={form.message}
+              onChange={(e) => {
+                setForm({ ...form, message: e.target.value });
+                setErrors({ ...errors, message: "" });
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = "var(--accent)";
+                e.target.style.boxShadow = "0 0 10px rgba(232,131,58,0.2)";
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = errors.message
+                  ? "#e05555"
+                  : "var(--border)";
+                e.target.style.boxShadow = "none";
+              }}
+              style={{
+                ...baseInput("message"),
+                resize: "vertical",
+                minHeight: "140px",
+              }}
+            />
+            {errors.message && <span style={errMsg}>// {errors.message}</span>}
+
+            <button
+              className="magnetic"
+              onClick={handleSubmit}
+              style={{
+                width: "100%",
+                padding: "1.1rem",
+                background: "var(--accent)",
+                color: "var(--bg)",
+                border: "none",
+                cursor: "none",
+                fontFamily: "var(--font-body)",
+                fontSize: "0.78rem",
+                fontWeight: 600,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                transition: "opacity 0.3s, box-shadow 0.3s",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.opacity = "0.88";
+                e.target.style.boxShadow = "0 0 30px rgba(232,131,58,0.35)";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.opacity = "1";
+                e.target.style.boxShadow = "none";
+              }}
+            >
+              {t.btnSend}
+            </button>
+          </div>
+        );
+      }
+
+      const bugHuntRoot = document.getElementById("react-bughunt");
+      if (bugHuntRoot) ReactDOM.createRoot(bugHuntRoot).render(<BugHuntGame />);
+
+      const projRoot = document.getElementById("react-projects");
+      if (projRoot) ReactDOM.createRoot(projRoot).render(<App />);
+
+      const contactRoot = document.getElementById("react-contact");
+      if (contactRoot) ReactDOM.createRoot(contactRoot).render(<ContactApp />);
+    </script>
+
+    <script>
+      $(function () {
+        $(window).on("scroll", function () {
+          let winScroll =
+            document.body.scrollTop || document.documentElement.scrollTop;
+          let height =
+            document.documentElement.scrollHeight -
+            document.documentElement.clientHeight;
+          $("#scroll-progress").css("width", (winScroll / height) * 100 + "%");
+        });
+
+        const $cur = $("#cursor");
+        const $ring = $("#cursorRing");
+        let mx = 0,
+          my = 0,
+          rx = 0,
+          ry = 0;
+
+        $(document).on("mousemove", function (e) {
+          mx = e.clientX;
+          my = e.clientY;
+          $cur.css({ left: mx - 5, top: my - 5 });
+        });
+
+        (function followRing() {
+          rx += (mx - rx) * 0.15;
+          ry += (my - ry) * 0.15;
+          $ring.css({ left: rx - 20, top: ry - 20 });
+          requestAnimationFrame(followRing);
+        })();
+
+        $("a, button, .tag, .acc-head, .tl-item, .magnetic")
+          .not(".lang-btn")
+          .on("mouseenter", function () {
+            $cur.css({ transform: "scale(2.2)", background: "var(--text)" });
+            $ring.css({
+              transform: "scale(1.5)",
+              opacity: "0.2",
+              borderColor: "var(--text)",
+            });
+          })
+          .on("mouseleave", function () {
+            $cur.css({ transform: "scale(1)", background: "var(--accent)" });
+            $ring.css({
+              transform: "scale(1)",
+              opacity: "1",
+              borderColor: "rgba(232,131,58,0.6)",
+            });
+          });
+
+        $(".magnetic")
+          .on("mousemove", function (e) {
+            const pos = $(this).offset();
+            const x = e.pageX - pos.left - $(this).width() / 2;
+            const y = e.pageY - pos.top - $(this).height() / 2;
+            $(this).css("transform", `translate(${x * 0.3}px, ${y * 0.3}px)`);
+          })
+          .on("mouseleave", function () {
+            $(this).css("transform", "translate(0px, 0px)");
+          });
+
+        $(".photo-box")
+          .on("mousemove", function (e) {
+            const x = e.pageX - $(this).offset().left;
+            const y = e.pageY - $(this).offset().top;
+            const cx = $(this).width() / 2;
+            const cy = $(this).height() / 2;
+            $(this).css(
+              "transform",
+              `perspective(1000px) rotateX(${((y - cy) / cy) * -10}deg) rotateY(${((x - cx) / cx) * 10}deg) scale3d(1.02, 1.02, 1.02)`,
+            );
+          })
+          .on("mouseleave", function () {
+            $(this).css(
+              "transform",
+              "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)",
+            );
+          });
+
+        $(window).on("scroll.nav", function () {
+          $("#nav").toggleClass("scrolled", $(this).scrollTop() > 70);
+        });
+
+        $("#burger").on("click", function () {
+          $(this).toggleClass("open");
+          $("#mobileMenu").toggleClass("open");
+        });
+
+        $("#mobileMenu .mob-link").on("click", function () {
+          $("#burger").removeClass("open");
+          $("#mobileMenu").removeClass("open");
+        });
+
+        $('a[href^="#"]').on("click", function (e) {
+          const t = $($(this).attr("href"));
+          if (!t.length) return;
+          e.preventDefault();
+          $("html,body").animate({ scrollTop: t.offset().top - 75 }, 750);
+        });
+
+        function reveal() {
+          const winBot = $(window).scrollTop() + $(window).height();
+          $(".reveal").each(function (i) {
+            if ($(this).offset().top < winBot - 60) {
+              const delay = i * 0.08;
+              $(this)
+                .css("transition-delay", delay + "s")
+                .addClass("in");
+            }
+          });
+        }
+        reveal();
+        $(window).on("scroll.reveal", reveal);
+
+        let barsAnimated = false;
+        function animateBars() {
+          if (barsAnimated) return;
+          const sTop = $("#skills").offset().top;
+          if ($(window).scrollTop() + $(window).height() > sTop + 80) {
+            barsAnimated = true;
+            $(".skill-fill").each(function (i) {
+              const w = $(this).data("w") + "%";
+              const $b = $(this);
+              setTimeout(function () {
+                $b.css("width", w);
+              }, i * 150);
+            });
+          }
+        }
+        animateBars();
+        $(window).on("scroll.bars", animateBars);
+
+        let pipsAnimated = false;
+        $(window).on("scroll.pips", function () {
+          if (pipsAnimated) return;
+          const sTop = $("#skills").offset().top;
+          if ($(window).scrollTop() + $(window).height() > sTop + 180) {
+            pipsAnimated = true;
+            $('.pip[data-lit="1"]').each(function (i) {
+              const $p = $(this);
+              setTimeout(function () {
+                $p.addClass("lit");
+              }, i * 100);
+            });
+          }
+        });
+
+        $(".tag").on("click", function () {
+          $(this).css("transform", "scale(0.92)");
+          setTimeout(() => $(this).css("transform", ""), 160);
+        });
+
+        $(".acc-head").on("click", function () {
+          const $item = $(this).closest(".acc-item");
+          const $body = $item.find(".acc-body");
+          const isOpen = $item.hasClass("open");
+
+          $(".acc-item").removeClass("open");
+          $(".acc-body").slideUp(400, "swing");
+
+          if (!isOpen) {
+            $item.addClass("open");
+            $body.slideDown(400, "swing");
+          }
+        });
+        $(".acc-item:first .acc-head").trigger("click");
+
+        $(window).on("mousemove.orbs", function (e) {
+          const px = (e.clientX / $(window).width() - 0.5) * 30;
+          const py = (e.clientY / $(window).height() - 0.5) * 30;
+          $(".orb-1").css("transform", "translate(" + px + "px," + py + "px)");
+          $(".orb-2").css(
+            "transform",
+            "translate(" + -px * 0.6 + "px," + -py * 0.6 + "px)",
+          );
+          $(".orb-3").css(
+            "transform",
+            "translate(" + px * 0.4 + "px," + py * 0.9 + "px)",
+          );
+        });
+
+        const sections = [
+          "hero",
+          "about",
+          "skills",
+          "experience",
+          "education",
+          "projects",
+          "contact",
+        ];
+        $(window).on("scroll.active", function () {
+          const scroll = $(this).scrollTop() + 120;
+          sections.forEach(function (id) {
+            const el = $("#" + id);
+            if (!el.length) return;
+            if (
+              scroll >= el.offset().top &&
+              scroll < el.offset().top + el.outerHeight()
+            ) {
+              $(".nav-links > li > a").css("color", "");
+              $('.nav-links a[href="#' + id + '"]').css(
+                "color",
+                "var(--accent)",
+              );
+            }
+          });
+        });
+
+        $(".lang-btn").on("click", function () {
+          const lang = $(this).data("lang");
+          window.currentLang = lang;
+
+          $(".lang-btn").removeClass("active");
+          $(`.lang-btn[data-lang="${lang}"]`).addClass("active");
+
+          $("[data-i18n]").each(function () {
+            const key = $(this).data("i18n");
+            if (translations[lang] && translations[lang][key]) {
+              $(this).html(translations[lang][key]);
+            }
+          });
+
+          const event = new CustomEvent("languageChanged", { detail: lang });
+          window.dispatchEvent(event);
+        });
+      });
+    </script>
+  </body>
+</html>
