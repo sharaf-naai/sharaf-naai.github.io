@@ -1337,7 +1337,31 @@ footer span:hover {
   footer {
     padding: 2rem 2.5rem;
   }
+
+  /* Hide custom cursor on mobile/tablet */
+  .cursor,
+  .cursor-ring {
+    display: none !important;
+  }
+
+  /* Restore default cursors */
+  body,
+  .photo-box {
+    cursor: auto !important;
+  }
+
+  a,
+  button,
+  .btn-fill,
+  .btn-outline,
+  .tag,
+  .acc-head,
+  .tl-item,
+  .magnetic {
+    cursor: pointer !important;
+  }
 }
+
 @media (max-width: 640px) {
   .hero-name {
     font-size: 3.2rem;
