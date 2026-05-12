@@ -720,6 +720,15 @@
         transition: transform 0.2s ease-out;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
       }
+      .photo-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+      }
       .photo-box::before {
         content: "";
         position: absolute;
@@ -727,9 +736,10 @@
         background: linear-gradient(
           160deg,
           transparent 40%,
-          rgba(232, 131, 58, 0.15) 100%
+          rgba(232, 131, 58, 0.25) 100%
         );
         transform: translateZ(20px);
+        z-index: 2;
       }
       .photo-box i {
         font-size: 3.5rem;
@@ -739,6 +749,7 @@
         transition:
           opacity 0.3s,
           transform 0.3s;
+        z-index: 3;
       }
       .photo-box:hover i {
         opacity: 1;
@@ -750,6 +761,7 @@
         color: var(--muted);
         letter-spacing: 0.18em;
         transform: translateZ(30px);
+        z-index: 3;
       }
 
       .photo-frame::before {
@@ -1484,8 +1496,7 @@
       <div class="about-grid">
         <div class="photo-frame reveal">
           <div class="photo-box">
-            <i class="fas fa-user"></i>
-            <span>// photo.jpg</span>
+            <img src="me.png" alt="Charaf Eddine Naai" />
           </div>
           <div class="photo-badge magnetic">
             <strong>∞</strong>
@@ -1527,10 +1538,6 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="reveal" style="margin-top: 6rem">
-        <div id="react-bughunt"></div>
       </div>
     </section>
 
@@ -1821,7 +1828,7 @@
       <h2 class="sec-title reveal" data-i18n="title_proj">
         Mes Créations <em>Récentes</em>
       </h2>
-      <div id="react-projects" class="reveal"></div>
+      <div id="react-projects"></div>
     </section>
 
     <section id="contact">
@@ -2035,6 +2042,7 @@
       const reactTranslations = {
         fr: {
           code: "Code source",
+          code_private: "Code Privé",
           demo: "Démo live",
           namePlaceholder: "Votre nom complet",
           emailPlaceholder: "Votre adresse email",
@@ -2047,20 +2055,10 @@
           errEmail2: "Format invalide (ex: nom@domaine.com)",
           errMsg1: "Le message est requis",
           errMsg2: "Message trop court (min. 10 caractères)",
-          bhTitle: "Mini-Jeu : La Chasse aux Bugs",
-          bhDesc:
-            "La production est en danger ! Écrasez les bugs avant qu'il ne soit trop tard.",
-          bhBtnPlay: "Lancer le Déploiement (Jouer)",
-          bhScore: "Bugs corrigés",
-          bhTime: "Temps restant",
-          bhEnd: "Déploiement terminé !",
-          bhEndScore: "Score final :",
-          bhEval1: "La prod est en PLS... (Moins de 5)",
-          bhEval2: "Pas mal, la prod tient le coup ! (5 à 10)",
-          bhEval3: "Expert ! Zéro bug en prod. (Plus de 10)",
         },
         en: {
           code: "Source code",
+          code_private: "Private Code",
           demo: "Live demo",
           namePlaceholder: "Your full name",
           emailPlaceholder: "Your email address",
@@ -2074,51 +2072,40 @@
           errEmail2: "Invalid format (e.g. name@domain.com)",
           errMsg1: "Message is required",
           errMsg2: "Message too short (min. 10 characters)",
-          bhTitle: "Minigame: Bug Hunt",
-          bhDesc:
-            "Production is at risk! Squash the bugs before it's too late.",
-          bhBtnPlay: "Deploy to Prod (Play)",
-          bhScore: "Bugs Fixed",
-          bhTime: "Time Left",
-          bhEnd: "Deployment Finished!",
-          bhEndScore: "Final Score:",
-          bhEval1: "Prod is crying... (Under 5)",
-          bhEval2: "Not bad, prod is stable! (5 to 10)",
-          bhEval3: "Expert! Zero bugs in prod. (Over 10)",
         },
       };
 
       const initialProjects = [
         {
-          title: { fr: "Plateforme de Stages", en: "Internship Platform" },
+          title: { fr: "ProductLab", en: "ProductLab" },
           category: "// Backend · Laravel",
           description: {
             fr: "Architecture complète d'une plateforme de gestion de stages pour étudiants. Bases de données relationnelles optimisées, authentification sécurisée.",
             en: "Complete architecture of a student internship management platform. Optimized relational databases, secure authentication.",
           },
           technologies: ["Laravel", "PHP", "MySQL", "Sanctum"],
+          github: "private",
+          demo: null,
+        },
+        {
+          title: { fr: "HanaBaly", en: "HanaBaly" },
+          category: "// Full-Stack · Next.js/Express",
+          description: {
+            fr: "Plateforme de prise de rendez-vous pour psychologues et coachs mentaux, développée pour le club ENACTUS.",
+            en: "Appointment booking platform for psychologists and mental coaches, developed for the ENACTUS club.",
+          },
+          technologies: ["Next.js", "Express.js", "TailwindCSS"],
           github: "https://github.com/sharaf-naai",
           demo: null,
         },
         {
-          title: { fr: "E-Commerce Dashboard", en: "E-Commerce Dashboard" },
-          category: "// Full-Stack · React/Node",
+          title: { fr: "Amberwood Arena", en: "Amberwood Arena" },
+          category: "// Game Dev · C++",
           description: {
-            fr: "Tableau de bord d'administration pour e-commerce avec statistiques en temps réel, gestion des stocks et suivi des commandes.",
-            en: "Admin dashboard for e-commerce with real-time statistics, inventory management, and order tracking.",
+            fr: "Mini-jeu développé en C++ mettant en pratique les concepts de la programmation orientée objet dans le cadre d'un projet universitaire.",
+            en: "Mini-game developed in C++ applying object-oriented programming concepts as part of a university school project.",
           },
-          technologies: ["ReactJS", "TailwindCSS", "Chart.js", "Express"],
-          github: "https://github.com/sharaf-naai",
-          demo: "#",
-        },
-        {
-          title: { fr: "Prise de RDV Médicaux", en: "Medical Appointments" },
-          category: "// Frontend · React",
-          description: {
-            fr: "Plateforme de gestion de rendez-vous médicaux avec calendrier interactif, planning médecins/patients et interface intuitive.",
-            en: "Medical appointment management platform with interactive calendar, doctor/patient scheduling and intuitive interface.",
-          },
-          technologies: ["ReactJS", "Tailwind", "GSAP"],
+          technologies: ["C++", "OOP", "Game Logic"],
           github: "https://github.com/sharaf-naai",
           demo: null,
         },
@@ -2148,245 +2135,6 @@
           demo: "#",
         },
       ];
-
-      function BugHuntGame() {
-        const [lang, setLang] = useState(window.currentLang);
-        const [score, setScore] = useState(0);
-        const [timeLeft, setTimeLeft] = useState(15);
-        const [isPlaying, setIsPlaying] = useState(false);
-        const [gameOver, setGameOver] = useState(false);
-        const [activeHole, setActiveHole] = useState(null);
-
-        useEffect(() => {
-          const handleLangChange = (e) => setLang(e.detail);
-          window.addEventListener("languageChanged", handleLangChange);
-          return () =>
-            window.removeEventListener("languageChanged", handleLangChange);
-        }, []);
-
-        useEffect(() => {
-          let timerId;
-          let moleId;
-
-          if (isPlaying && timeLeft > 0) {
-            timerId = setInterval(() => {
-              setTimeLeft((prev) => prev - 1);
-            }, 1000);
-
-            moleId = setInterval(() => {
-              const randomHole = Math.floor(Math.random() * 9);
-              setActiveHole(randomHole);
-
-              setTimeout(() => {
-                setActiveHole(null);
-              }, 650);
-            }, 800);
-          } else if (timeLeft === 0 && isPlaying) {
-            setIsPlaying(false);
-            setGameOver(true);
-            setActiveHole(null);
-          }
-
-          return () => {
-            clearInterval(timerId);
-            clearInterval(moleId);
-          };
-        }, [isPlaying, timeLeft]);
-
-        const startGame = () => {
-          setScore(0);
-          setTimeLeft(15);
-          setIsPlaying(true);
-          setGameOver(false);
-        };
-
-        const smashBug = (index) => {
-          if (!isPlaying) return;
-          if (index === activeHole) {
-            setScore((s) => s + 1);
-            setActiveHole(null);
-          }
-        };
-
-        const t = reactTranslations[lang];
-
-        return (
-          <div
-            style={{
-              background: "var(--surface2)",
-              border: "1px solid var(--border)",
-              padding: "2rem",
-              borderRadius: "4px",
-              textAlign: "center",
-              boxShadow: "inset 0 0 20px rgba(0,0,0,0.3)",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            <h3
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "1.8rem",
-                color: "var(--accent2)",
-                marginBottom: "0.5rem",
-              }}
-            >
-              {t.bhTitle}
-            </h3>
-            <p
-              style={{
-                color: "var(--muted)",
-                fontSize: "0.9rem",
-                marginBottom: "2rem",
-              }}
-            >
-              {t.bhDesc}
-            </p>
-
-            {!isPlaying && !gameOver && (
-              <button
-                onClick={startGame}
-                className="magnetic"
-                style={{
-                  padding: "0.8rem 2rem",
-                  background: "var(--accent)",
-                  color: "var(--bg)",
-                  border: "none",
-                  cursor: "none",
-                  fontFamily: "var(--font-body)",
-                  fontWeight: 600,
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  transition: "box-shadow 0.3s",
-                }}
-              >
-                {t.bhBtnPlay}
-              </button>
-            )}
-
-            {gameOver && (
-              <div style={{ marginBottom: "2rem", animation: "fadeIn 0.5s" }}>
-                <h4
-                  style={{
-                    color: "var(--text)",
-                    fontSize: "1.2rem",
-                    marginBottom: "0.5rem",
-                  }}
-                >
-                  {t.bhEnd}
-                </h4>
-                <p
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    color: "var(--accent)",
-                    fontSize: "1.5rem",
-                    marginBottom: "1rem",
-                  }}
-                >
-                  {t.bhEndScore} {score}
-                </p>
-                <p
-                  style={{
-                    color: "var(--muted)",
-                    fontSize: "0.9rem",
-                    fontStyle: "italic",
-                    marginBottom: "1.5rem",
-                  }}
-                >
-                  {score < 5 ? t.bhEval1 : score <= 10 ? t.bhEval2 : t.bhEval3}
-                </p>
-                <button
-                  onClick={startGame}
-                  className="magnetic"
-                  style={{
-                    padding: "0.6rem 1.5rem",
-                    background: "transparent",
-                    color: "var(--text)",
-                    border: "1px solid var(--accent)",
-                    cursor: "none",
-                    fontFamily: "var(--font-body)",
-                    textTransform: "uppercase",
-                    fontSize: "0.8rem",
-                  }}
-                >
-                  Replay
-                </button>
-              </div>
-            )}
-
-            {(isPlaying || gameOver) && (
-              <div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    maxWidth: "300px",
-                    margin: "0 auto 1.5rem auto",
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "0.8rem",
-                    color: "var(--muted)",
-                  }}
-                >
-                  <span>
-                    {t.bhScore} :{" "}
-                    <strong
-                      style={{ color: "var(--accent)", fontSize: "1rem" }}
-                    >
-                      {score}
-                    </strong>
-                  </span>
-                  <span>
-                    {t.bhTime} :{" "}
-                    <strong style={{ color: "var(--text)", fontSize: "1rem" }}>
-                      {timeLeft}s
-                    </strong>
-                  </span>
-                </div>
-
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(3, 1fr)",
-                    gap: "10px",
-                    maxWidth: "300px",
-                    margin: "0 auto",
-                  }}
-                >
-                  {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((index) => (
-                    <div
-                      key={index}
-                      onClick={() => smashBug(index)}
-                      style={{
-                        aspectRatio: "1/1",
-                        background: "rgba(0,0,0,0.3)",
-                        border: "1px solid rgba(255,255,255,0.05)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        cursor: "none",
-                        position: "relative",
-                        overflow: "hidden",
-                        borderRadius: "4px",
-                      }}
-                    >
-                      {activeHole === index && isPlaying && (
-                        <i
-                          className="fas fa-bug"
-                          style={{
-                            color: "#e05555",
-                            fontSize: "2rem",
-                            animation: "fadeUp 0.1s ease-out",
-                          }}
-                        ></i>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        );
-      }
 
       function ProjectCard({ project, lang }) {
         const [hovered, setHovered] = useState(false);
@@ -2509,7 +2257,20 @@
                 transform: "translateZ(40px)",
               }}
             >
-              {project.github && (
+              {project.github === "private" ? (
+                <span
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    color: "var(--muted)",
+                    fontSize: "0.8rem",
+                    cursor: "not-allowed",
+                  }}
+                >
+                  <i className="fas fa-lock"></i> {t.code_private}
+                </span>
+              ) : project.github ? (
                 <a
                   href={project.github}
                   target="_blank"
@@ -2531,7 +2292,8 @@
                 >
                   <i className="fab fa-github"></i> {t.code}
                 </a>
-              )}
+              ) : null}
+
               {project.demo && (
                 <a
                   href={project.demo}
@@ -2774,9 +2536,6 @@
         );
       }
 
-      const bugHuntRoot = document.getElementById("react-bughunt");
-      if (bugHuntRoot) ReactDOM.createRoot(bugHuntRoot).render(<BugHuntGame />);
-
       const projRoot = document.getElementById("react-projects");
       if (projRoot) ReactDOM.createRoot(projRoot).render(<App />);
 
@@ -2886,13 +2645,13 @@
 
         function reveal() {
           const winBot = $(window).scrollTop() + $(window).height();
-          $(".reveal").each(function (i) {
-            if ($(this).offset().top < winBot - 60) {
-              const delay = i * 0.08;
-              $(this)
-                .css("transition-delay", delay + "s")
-                .addClass("in");
-            }
+          let visibleReveals = $(".reveal:not(.in)").filter(function () {
+            return $(this).offset().top < winBot - 60;
+          });
+          visibleReveals.each(function (i) {
+            $(this)
+              .css("transition-delay", i * 0.1 + "s")
+              .addClass("in");
           });
         }
         reveal();
