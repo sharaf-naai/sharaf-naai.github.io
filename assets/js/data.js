@@ -72,6 +72,10 @@ window.translations = {
     contact_desc:
       "Vous avez un projet en tête ? Une collaboration à proposer ? N'hésitez pas à m'écrire, je réponds dans les 24h.",
     footer_text: "— Conçu avec passion",
+    lbl_certs: "04 — Certifications",
+    title_certs: "Brevets & <em>Credentials</em>",
+    cert_issued: "Délivré par",
+    cert_view: "Vérifier le statut",
   },
   en: {
     nav_about: "About",
@@ -146,6 +150,10 @@ window.translations = {
     contact_desc:
       "Have a project in mind? A collaboration to propose? Feel free to write to me, I usually reply within 24 hours.",
     footer_text: "— Crafted with passion",
+    lbl_certs: "04 — Certifications",
+    title_certs: "Licenses & <em>Credentials</em>",
+    cert_issued: "Issued by",
+    cert_view: "Verify Status",
   },
 };
 
@@ -170,6 +178,10 @@ window.reactTranslations = {
     errEmail2: "Format invalide (ex: nom@domaine.com)",
     errMsg1: "Le message est requis",
     errMsg2: "Message trop court (min. 10 caractères)",
+    lbl_certs: "04 — Certifications",
+    title_certs: "Brevets & <em>Credentials</em>",
+    cert_issued: "Délivré par",
+    cert_view: "Vérifier le statut",
   },
   en: {
     code: "Source code",
@@ -190,6 +202,10 @@ window.reactTranslations = {
     errEmail2: "Invalid format (e.g. name@domain.com)",
     errMsg1: "Message is required",
     errMsg2: "Message too short (min. 10 characters)",
+    lbl_certs: "04 — Certifications",
+    title_certs: "Licenses & <em>Credentials</em>",
+    cert_issued: "Issued by",
+    cert_view: "Verify Status",
   },
 };
 
